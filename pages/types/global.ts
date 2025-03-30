@@ -11,5 +11,3 @@ type SpotifyTrack = {
   album: any;
   name: string;
 };
-
-type SpotifyRecentData = { track: any };

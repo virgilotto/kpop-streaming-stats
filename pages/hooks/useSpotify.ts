@@ -1,45 +1,15 @@
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { kpopArtists } from "@/pages/utils/util";
 
 export default function useSpotifyData() {
   const { data: session } = useSession();
   // @ts-ignore
   const accessToken = session?.accessToken;
 
-  const [topTracks, setTopTracks] = useState([]);
-  const [topArtists, setTopArtists] = useState([]);
-  const [recentTracks, setRecentTracks] = useState([]);
-
-  const kpopArtists = [
-    "BTS",
-    "BLACKPINK",
-    "TWICE",
-    "SEVENTEEN",
-    "EXO",
-    "TXT",
-    "STRAY KIDS",
-    "ITZY",
-    "AESPA",
-    "IVE",
-    "NCT 127",
-    "NCT DREAM",
-    "RED VELVET",
-    "GFRIEND",
-    "MAMAMOO",
-    "LE SSERAFIM",
-    "NEWJEANS",
-    "ENHYPEN",
-    "SHINEE",
-    "BIGBANG",
-    "2NE1",
-    "GOT7",
-    "IKON",
-    "MONSTA X",
-    "SUPER JUNIOR",
-    "VIXX",
-    "KISS OF LIFE",
-    "MARK",
-  ];
+  const [topTracks, setTopTracks] = useState<SpotifyTrack[]>([]);
+  const [topArtists, setTopArtists] = useState<SpotifyArtist[]>([]);
+  const [recentTracks, setRecentTracks] = useState<SpotifyTrack[]>([]);
 
   useEffect(() => {
     if (!accessToken) return;
@@ -87,7 +57,7 @@ export default function useSpotifyData() {
         );
 
         const kpopRecentTracksFiltered = recentData.items
-          .map((item: SpotifyRecentData) => item.track)
+          .map((item: any) => item.track)
           .filter((track: SpotifyTrack) =>
             track.artists.some(
               (artist) =>

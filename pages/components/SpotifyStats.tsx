@@ -1,6 +1,7 @@
 import useSpotifyData from "@/pages/hooks/useSpotify";
 import { signOut, useSession } from "next-auth/react";
 import DetailsGrid from "@/pages/components/DetailsGrid";
+import ShareButton from "@/pages/components/ShareButton";
 
 export default function SpotifyStats() {
   const { topTracks, topArtists, recentTracks } = useSpotifyData();
@@ -15,7 +16,7 @@ export default function SpotifyStats() {
             <span className="text-xl">🎵</span>
             <p className="text-sm font-medium">
               Logged in as{" "}
-              <span className="font-bold">{session?.user?.name}</span>
+              <span className="font-bold">{session.user?.name}</span>
             </p>
           </div>
           &nbsp;
@@ -25,11 +26,16 @@ export default function SpotifyStats() {
           >
             Logout
           </button>
+          <ShareButton
+            username={session.user?.name || ""}
+            topTrack={topTracks.length ? topTracks[0].name : ""}
+            topArtist={topArtists.length ? topArtists[0].name : ""}
+          />
         </div>
       )}
       {/* Top Tracks */}
       <DetailsGrid title={"🔥 Your Top K-Pop Tracks"}>
-        {topTracks.map((track: SpotifyTrack) => (
+        {topTracks.map((track) => (
           <li
             key={track.id}
             className="flex items-center space-x-3 bg-gray-800 p-3 rounded-lg"
@@ -52,7 +58,7 @@ export default function SpotifyStats() {
 
       {/* Top Artists */}
       <DetailsGrid title={"🎤 Your Top K-Pop Artists"}>
-        {topArtists.map((artist: SpotifyArtist) => (
+        {topArtists.map((artist) => (
           <li key={artist.id} className="text-center">
             <img
               src={artist.images[0]?.url}
@@ -67,7 +73,7 @@ export default function SpotifyStats() {
 
       {/* Recently Played */}
       <DetailsGrid title={"⏪ Recently Played K-Pop"}>
-        {recentTracks.map((track: SpotifyTrack, index) => (
+        {recentTracks.map((track, index) => (
           <li
             key={track.id + "_" + index}
             className="flex items-center space-x-3 bg-gray-800 p-3 rounded-lg"

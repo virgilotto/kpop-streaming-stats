@@ -15,7 +15,7 @@ export default function SpotifyStats() {
             <span className="text-xl">🎵</span>
             <p className="text-sm font-medium">
               Logged in as{" "}
-              <span className="font-bold">{session.user.name}</span>
+              <span className="font-bold">{session?.user?.name}</span>
             </p>
           </div>
           &nbsp;
@@ -29,7 +29,7 @@ export default function SpotifyStats() {
       )}
       {/* Top Tracks */}
       <DetailsGrid title={"🔥 Your Top K-Pop Tracks"}>
-        {topTracks.map((track) => (
+        {topTracks.map((track: SpotifyTrack) => (
           <li
             key={track.id}
             className="flex items-center space-x-3 bg-gray-800 p-3 rounded-lg"
@@ -52,7 +52,7 @@ export default function SpotifyStats() {
 
       {/* Top Artists */}
       <DetailsGrid title={"🎤 Your Top K-Pop Artists"}>
-        {topArtists.map((artist) => (
+        {topArtists.map((artist: SpotifyArtist) => (
           <li key={artist.id} className="text-center">
             <img
               src={artist.images[0]?.url}
@@ -67,7 +67,7 @@ export default function SpotifyStats() {
 
       {/* Recently Played */}
       <DetailsGrid title={"⏪ Recently Played K-Pop"}>
-        {recentTracks.map((track) => (
+        {recentTracks.map((track: SpotifyTrack) => (
           <li
             key={track.id}
             className="flex items-center space-x-3 bg-gray-800 p-3 rounded-lg"

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 export default function useSpotifyData() {
   const { data: session } = useSession();
+  // @ts-ignore
   const accessToken = session?.accessToken;
 
   const [topTracks, setTopTracks] = useState([]);
@@ -71,22 +72,23 @@ export default function useSpotifyData() {
         const recentData = await recentRes.json();
 
         const kpopArtistsFiltered = artistsData.items.filter(
-          (artist) =>
+          (artist: SpotifyArtist) =>
             artist.genres.some((genre) => genre.includes("k-pop")) ||
             kpopArtists.includes(artist.name.toUpperCase()),
         );
 
-        const kpopTracksFiltered = tracksData.items.filter((track) =>
-          track.artists.some(
-            (artist) =>
-              artist.genres?.some((genre) => genre.includes("k-pop")) ||
-              kpopArtists.includes(artist.name.toUpperCase()),
-          ),
+        const kpopTracksFiltered = tracksData.items.filter(
+          (track: SpotifyTrack) =>
+            track.artists.some(
+              (artist) =>
+                artist.genres?.some((genre) => genre.includes("k-pop")) ||
+                kpopArtists.includes(artist.name.toUpperCase()),
+            ),
         );
 
         const kpopRecentTracksFiltered = recentData.items
-          .map((item) => item.track)
-          .filter((track) =>
+          .map((item: SpotifyRecentData) => item.track)
+          .filter((track: SpotifyTrack) =>
             track.artists.some(
               (artist) =>
                 artist.genres?.some((genre) => genre.includes("k-pop")) ||

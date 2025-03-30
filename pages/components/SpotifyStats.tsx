@@ -67,9 +67,9 @@ export default function SpotifyStats() {
 
       {/* Recently Played */}
       <DetailsGrid title={"⏪ Recently Played K-Pop"}>
-        {recentTracks.map((track: SpotifyTrack) => (
+        {recentTracks.map((track: SpotifyTrack, index) => (
           <li
-            key={track.id}
+            key={track.id + "_" + index}
             className="flex items-center space-x-3 bg-gray-800 p-3 rounded-lg"
           >
             <img

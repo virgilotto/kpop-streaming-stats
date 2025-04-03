@@ -26,10 +26,14 @@ export default function SpotifyStats() {
           >
             Logout
           </button>
+          &nbsp;
           <ShareButton
             username={session.user?.name || ""}
             topTrack={topTracks.length ? topTracks[0].name : ""}
             topArtist={topArtists.length ? topArtists[0].name : ""}
+            albumCover={
+              topTracks.length ? topTracks[0].album.images[1].url : ""
+            }
           />
         </div>
       )}
